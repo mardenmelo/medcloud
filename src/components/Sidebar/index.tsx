@@ -8,21 +8,59 @@ import {
     ListItemButton,
     ListItemIcon,
     ListItemText,
-    useMediaQuery,
+    Icon
 } from '@mui/material';
 import StackedBarChartTwoToneIcon from '@mui/icons-material/StackedBarChartTwoTone';
 import PersonAddAltTwoToneIcon from '@mui/icons-material/PersonAddAltTwoTone';
 import FormatListBulletedTwoToneIcon from '@mui/icons-material/FormatListBulletedTwoTone';
 import { Box }from '@mui/system';
+import { useNavigate, Navigate } from 'react-router-dom';
 
 interface IAppThemeProviderProps {
     children: React.ReactNode;
 }
 
-export const Sidebar: React.FC<IAppThemeProviderProps> = ( { children }) => {
+// interface ItemProps {
+//     to: 'string';
+//     icon: 'string';
+//     label: string;
+//     onClick: () => void;
+// }
 
+// const ListItem: React.FC<ItemProps> = ({ to, icon, label, onClick }) => {
+//     const navigate = useNavigate();
+
+//     const handleClick = () => {
+//         navigate(to)
+//         onClick();
+//     };
+
+//     return (
+//         <ListItemButton onClick={handleClick}>
+//             <ListItemIcon>
+//                 <Icon>{icon}</Icon>
+//             </ListItemIcon>
+//             <ListItemText primary={label}/>
+//         </ListItemButton>
+//     )
+// }
+
+export const Sidebar: React.FC<IAppThemeProviderProps> = ( { children }) => {
+    const navigate = useNavigate();
     const theme = useTheme();
 
+    const handleNavigateHome = () => {
+        navigate('/home');
+    } 
+
+    const handleNavigateAdd = () => {
+        navigate('/addpatient');
+    }
+
+    const handleNavigateList = () => {
+        navigate('/listpatient');
+    }
+    
     return (
         <>
             <Drawer variant='permanent'>
@@ -53,19 +91,19 @@ export const Sidebar: React.FC<IAppThemeProviderProps> = ( { children }) => {
 
                 <Box flex={1}>
                     <List component="nav">
-                        <ListItemButton>
+                        <ListItemButton onClick={handleNavigateHome}>
                             <ListItemIcon>
                                 <StackedBarChartTwoToneIcon />
                             </ListItemIcon>
                             <ListItemText primary="Dashboard"/>
                         </ListItemButton>
-                        <ListItemButton>
+                        <ListItemButton onClick={handleNavigateAdd}>
                             <ListItemIcon>
                                 <PersonAddAltTwoToneIcon />
                             </ListItemIcon>
                             <ListItemText primary="Adicionar paciente"/>
                         </ListItemButton>
-                        <ListItemButton>
+                        <ListItemButton onClick={handleNavigateList}>
                             <ListItemIcon>
                                 <FormatListBulletedTwoToneIcon />
                             </ListItemIcon>
