@@ -2,13 +2,13 @@ import { Typography, useTheme } from "@mui/material";
 import { Box } from "@mui/system"
 import { ReactNode } from "react";
 
-interface ILayoutProps {
+interface LayoutProps {
     children: React.ReactNode;
     title: string;
     toolbar: ReactNode | undefined;
 }
 
-export const LayoutDefault: React.FC<ILayoutProps> = ({ children, title, toolbar }) => {
+export const LayoutDefault: React.FC<LayoutProps> = ({ children, title, toolbar }) => {
     const theme = useTheme();
 
     return (

@@ -1,11 +1,16 @@
-import { Toolbar } from "../../components/Toolbar"
+import { SearchBar } from "../../components/SearchBar"
 import { LayoutDefault } from "../../shared/layout/LayoutDefault"
 
 export const Dashboard = () => {
     return (
         <LayoutDefault 
             title="Dashboard"
-            toolbar={<Toolbar />}
+            toolbar=
+            {
+                <SearchBar 
+                    showSearchInput
+                />
+            }
         >
           
         </LayoutDefault>

@@ -8,20 +8,20 @@ import {
     ListItemButton,
     ListItemIcon,
     ListItemText,
-    Icon
 } from '@mui/material';
 import StackedBarChartTwoToneIcon from '@mui/icons-material/StackedBarChartTwoTone';
 import PersonAddAltTwoToneIcon from '@mui/icons-material/PersonAddAltTwoTone';
 import FormatListBulletedTwoToneIcon from '@mui/icons-material/FormatListBulletedTwoTone';
+import ArrowBackSharpIcon from '@mui/icons-material/ArrowBackSharp';
 import { Box }from '@mui/system';
-import { useNavigate, Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
-interface IAppThemeProviderProps {
+interface AppThemeProviderProps {
     children: React.ReactNode;
 }
 
 
-export const Sidebar: React.FC<IAppThemeProviderProps> = ( { children }) => {
+export const Sidebar: React.FC<AppThemeProviderProps> = ( { children }) => {
     const navigate = useNavigate();
     const theme = useTheme();
 
@@ -87,6 +87,17 @@ export const Sidebar: React.FC<IAppThemeProviderProps> = ( { children }) => {
                         </ListItemButton>
                     </List>
                 </Box>
+                <List component="nav">
+                    <ListItemButton onClick={handleNavigateHome} >
+                        <ListItemIcon>
+                            <ArrowBackSharpIcon color='error'/>
+                        </ListItemIcon>
+                        <ListItemText 
+                            primary="Sair"
+                           
+                        />
+                    </ListItemButton>                   
+                </List>
                 </Box>
             </Drawer>
                 <Box height="100vh" marginLeft={theme.spacing(32)}>
