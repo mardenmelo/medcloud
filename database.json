@@ -1,0 +1,35 @@
+{
+    "listpatient": [
+        {
+            "id": 1,
+            "name": "José",
+            "birthDate": "1992",
+            "email": "jose@gmail.com",
+            "phone": "15999229922",
+            "address": {
+                "street": "string",
+                "houseNumber": 12,
+                "district": "string",
+                "city": "string",
+                "state": "string",  
+                "zipCode": "string"
+            }
+
+        },
+        {
+            "id": 2,
+            "name": "Maria",
+            "birthDate": "1990",
+            "email": "mariae@gmail.com",
+            "phone": "15999228782",
+            "address": {
+                "street": "rua",
+                "houseNumber": 12,
+                "district": "bairro",
+                "city": "CityC",
+                "state": "SP",  
+                "zipCode": "88098092"
+            }
+        }
+    ]
+}

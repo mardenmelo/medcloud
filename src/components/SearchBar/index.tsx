@@ -3,7 +3,8 @@ import {
     InputAdornment, 
     Paper, 
     TextField,
-    useTheme
+    useTheme,
+    Link
  } from "@mui/material";
 import { Box } from "@mui/system";
 import SearchIcon from '@mui/icons-material/Search';
@@ -20,6 +21,7 @@ export const SearchBar: React.FC<SearchBarProps> = (
         showSearchInput = false , 
         onChangeText
     }) => {
+
     const theme = useTheme();
 
     return (
@@ -60,8 +62,16 @@ export const SearchBar: React.FC<SearchBarProps> = (
                     color='primary'
                     disableElevation
                     variant='contained'
+                    
                 >
-                    Adicionar paciente
+                    <Link 
+                        href="/AddPatient"
+                        underline="none"
+                        color="inherit"
+                    >
+                        Adicionar paciente
+                    </Link>
+                    
                 </Button>
 
             </Box>
