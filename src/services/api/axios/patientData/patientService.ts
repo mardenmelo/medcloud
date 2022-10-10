@@ -1,21 +1,23 @@
 import { Api } from "..";
 import { PatientListProps } from "../../../../dtos/PatientListProps";
 
+
+
 type TotalPatient = {
-    data: PatientListProps;
+    data: PatientListProps[];
     totalCount: number;
 }
 
 const getAll = async( page=1, filter = '' ): Promise<TotalPatient | Error> => {
     try{
-        const relativeUrl = `/listpatient?_page=${page}&_limit=10&name_like=${filter}`
+        const relativeUrl = `/listpatient?_page=${page}&_limit=7&name_like=${filter}`
 
         const { data, headers } = await Api.get(relativeUrl);
 
         if (data) {
             return {  
               data,
-              totalCount: Number(headers['x-total-count'] || 10),
+              totalCount: Number(headers['x-total-count'] || 7),
             };
           }
 
@@ -29,7 +31,7 @@ const getAll = async( page=1, filter = '' ): Promise<TotalPatient | Error> => {
 
 const getById = async (id: number): Promise<PatientListProps | Error> => {
     try {
-      const { data } = await Api.get(`/patient/${id}`);
+      const { data } = await Api.get(`/listpatient/${id}`);
   
       if (data) {
         return data;
@@ -44,7 +46,7 @@ const getById = async (id: number): Promise<PatientListProps | Error> => {
 
   const create = async (dataPatient: Omit<PatientListProps, 'id'>): Promise<number | Error> => {
     try {
-      const { data } = await Api.post<PatientListProps>('/patient', dataPatient);
+      const { data } = await Api.post<PatientListProps>('/listpatient', dataPatient);
   
       if (data) {
         return data.id;
@@ -59,7 +61,7 @@ const getById = async (id: number): Promise<PatientListProps | Error> => {
 
   const updateById = async (id: number, dataPatient: PatientListProps): Promise<void | Error> => {
     try {
-      await Api.put(`/patient/${id}`, dataPatient);
+      await Api.put(`/listpatient/${id}`, dataPatient);
     } catch (error) {
       console.error(error);
       return new Error((error as { message: string }).message || 'Erro ao atualizar os dados.');
@@ -68,7 +70,7 @@ const getById = async (id: number): Promise<PatientListProps | Error> => {
 
   const deleteById = async (id: number): Promise<void | Error> => {
     try {
-      await Api.delete(`/patient/${id}`);
+      await Api.delete(`/listpatient/${id}`);
     } catch (error) {
       console.error(error);
       return new Error((error as { message: string }).message || 'Erro ao apagar os dados do paciente.');

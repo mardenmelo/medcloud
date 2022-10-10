@@ -1,5 +1,6 @@
 import { Button, Paper, useTheme } from "@mui/material"
 import { Box } from "@mui/system"
+import { useNavigate } from "react-router-dom";
 
 interface ToolbarButtonProps {
     showButtonNew?: boolean;
@@ -21,6 +22,8 @@ export const Toolbar: React.FC<ToolbarButtonProps> = ({
     }) => {
     const theme = useTheme();
 
+    const navigate = useNavigate();
+
     return (
         <Box
             gap={1}
@@ -36,7 +39,7 @@ export const Toolbar: React.FC<ToolbarButtonProps> = ({
                 color='primary'
                 disableElevation
                 variant='contained'
-                onClick={onClickButtonNew}
+                onClick={() => navigate('/addpatient/new')}
             >
                 Novo
             </Button>
@@ -48,15 +51,6 @@ export const Toolbar: React.FC<ToolbarButtonProps> = ({
                 onClick={onClickButtonSave}
             >
                 Salvar
-            </Button>
-
-            <Button 
-                color='error'
-                disableElevation
-                variant='outlined'
-                onClick={onClickButtonDelete}
-            >
-                Deletar
             </Button>
         </Box>
     )

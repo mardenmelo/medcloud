@@ -65,7 +65,7 @@ export const SearchBar: React.FC<SearchBarProps> = (
                     
                 >
                     <Link 
-                        href="/AddPatient"
+                        href="/addpatient/new"
                         underline="none"
                         color="inherit"
                     >

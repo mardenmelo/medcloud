@@ -11,5 +11,5 @@ export interface PatientListProps {
         city: string;
         state: string;
         zipCode: string
-    }
+    } 
 }
