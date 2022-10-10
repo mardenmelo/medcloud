@@ -10,7 +10,8 @@ export const ListPatient = () => {
     const [searchParams, setsearchParams] = useSearchParams();
     const { debounce } = useDebounce();
 
-    const [listPatient, setListPatient] = useState<PatientListProps[]>([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const [listPatient, setListPatient] = useState<PatientListProps>();
     const [totalPatient, setTotalPatient] = useState(0);
 
     const search = useMemo(() => {
@@ -18,13 +19,18 @@ export const ListPatient = () => {
     }, [searchParams])
 
     useEffect(() => {
+        setIsLoading(true)
+        
         debounce(() => {
             PatientService.getAll(1, search).
-            then((data) => {
-                if(data instanceof Error) {
-                    alert(data.message);
+            then((result) => {
+                if(result instanceof Error) {
+                    setIsLoading(false);
+                    alert(result.message);
                 } else {
-                    console.log(data)
+                    console.log(result)
+                    setTotalPatient(result.totalCount)
+                    setListPatient(result.data)
                 }
             })
         })

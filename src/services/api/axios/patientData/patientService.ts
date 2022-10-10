@@ -1,7 +1,6 @@
 import { Api } from "..";
 import { PatientListProps } from "../../../../dtos/PatientListProps";
 
-
 type TotalPatient = {
     data: PatientListProps;
     totalCount: number;
