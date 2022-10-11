@@ -3,10 +3,10 @@ export interface PatientListProps {
     name: string;
     birthDate: string;
     email: string;
-    phone: string;
+    phone?: string;
     address: {
         street: string;
-        houseNumber: number;
+        houseNumber: string;
         district: string;
         city: string;
         state: string;

@@ -1,18 +1,33 @@
 import { Grid, LinearProgress, Paper, Typography } from "@mui/material"
-import { Box } from "@mui/system"
-import { FormHandles } from "@unform/core"
-import { Form } from "@unform/web"
-import { useEffect, useRef, useState } from "react"
-import { useNavigate, useParams } from "react-router-dom"
-import { UnformTextField } from "../../components/Form/TextField"
-import { Toolbar } from "../../components/Toolbar"
-import { PatientListProps } from "../../dtos/PatientListProps"
-import { PatientService } from "../../services/api/axios/patientData/patientService"
-import { LayoutDefault } from "../../shared/layout/LayoutDefault"
+import { Box } from "@mui/system";
+import { FormHandles } from "@unform/core";
+import { Form } from "@unform/web";
+import { useEffect, useRef, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { UnformTextField } from "../../components/Form/TextField";
+import { Toolbar } from "../../components/Toolbar";
+import { PatientListProps } from "../../dtos/PatientListProps";
+import { PatientService } from "../../services/api/axios/patientData/patientService";
+import { LayoutDefault } from "../../shared/layout/LayoutDefault";
+import * as yup from 'yup';
 
 type ParamsProps = {
     id: string
 }
+
+const formValidationSchema = yup.object().shape({
+    name: yup.string().required('Campo obrigatório').min(3, 'O campo deve ter pelo menos 3 caracteres'),
+    email: yup.string().required('Campo obrigatório').email(),
+    birthDate: yup.string().required('Campo obrigatório').min(10, 'Insira a data correta'),
+    address: yup.object().shape({
+        street: yup.string().required('Campo obrigatório'),
+        houseNumber: yup.string().required('Campo obrigatório'),
+        district: yup.string().required('Campo obrigatório'),
+        city: yup.string().required('Campo obrigatório'),
+        state: yup.string().required('Campo obrigatório'),
+        zipCode: yup.string().required('Campo obrigatório')
+    })
+ })
 
 export const AddPatient = () => {
     const { id = 'new' } = useParams<ParamsProps>();
@@ -34,32 +49,61 @@ export const AddPatient = () => {
                     formRef.current?.setData(dataPatient)
                 }
             })
+        } else {
+            formRef.current?.setData({
+                name: '',
+                birthDate: '',
+                email: '',
+                address: {
+                    street: '',
+                    houseNumber: '',
+                    district: '',
+                    city: '',
+                    state: '',
+                    zipCode: ''
+                }
+            })
         }
     },[id])
 
-    const handleSaveNewPatient = (dataPatient: Omit<PatientListProps, 'id'>) => {
-
-
-        if(id == 'new') {
-            PatientService
-            .create(dataPatient)
-            .then((data) => {
-                if(data instanceof Error) {
-                    alert(data.message);
+    const handleSaveNewPatient = (dataPatient: PatientListProps) => {
+        formValidationSchema.validate(dataPatient, {abortEarly: false})
+            .then((isValidData => {
+                if(id == 'new') {
+                    PatientService
+                    .create(isValidData)
+                    .then((data) => {
+                        if(data instanceof Error) {
+                            alert(data.message);
+                        } else {
+                            alert('Dados salvos!')
+                            navigate(`/addpatient/${data}`)
+                        }
+                    })
                 } else {
-                    alert('Dados salvos!')
-                    navigate(`/addpatient/${data}`)
+                    PatientService
+                    .updateById(Number(id), {id: Number(id), ...isValidData})
+                    .then((data) => {
+                        if(data instanceof Error) {
+                            alert(data.message);
+                        } 
+                    })
                 }
-            })
-        } else {
-            PatientService
-            .updateById(Number(id), {id: Number(id), ...dataPatient})
-            .then((data) => {
-                if(data instanceof Error) {
-                    alert(data.message);
-                } 
-            })
-        }
+            }))
+            .catch((errors: yup.ValidationError) => {
+                const validationErrors: {[ key: string]: string} = {};
+
+                errors.inner.forEach(error => {
+                    if (!error.path) return;
+          
+                    validationErrors[error.path] = error.message;
+                  });
+          
+                  formRef.current?.setErrors(validationErrors);
+                }
+            );
+            
+
     }
 
 
@@ -103,7 +147,7 @@ export const AddPatient = () => {
                                 <UnformTextField label="E-mail" name="email" type='email' fullWidth/>
                             </Grid>
                             <Grid item xs={3}>
-                                <UnformTextField label="Data de Nascimento" name="birthDate" fullWidth/>
+                                <UnformTextField placeholder="dd/mm/yyyy" label="Data de Nascimento" name="birthDate" fullWidth/>
                             </Grid>
                         </Grid>
                         <Grid container item direction='row' spacing={2}>
@@ -127,7 +171,7 @@ export const AddPatient = () => {
                                 <UnformTextField label="UF" name="address.state" fullWidth/>
                             </Grid>
                             <Grid item xs={6}>
-                                <UnformTextField label="CEP" name="address.zipCode" fullWidth/>
+                                <UnformTextField placeholder="XX.XXX-XXX" label="CEP" name="address.zipCode" fullWidth/>
                             </Grid>
                         </Grid>
                     </Grid>

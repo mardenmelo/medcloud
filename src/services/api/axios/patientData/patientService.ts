@@ -17,7 +17,7 @@ const getAll = async( page=1, filter = '' ): Promise<TotalPatient | Error> => {
         if (data) {
             return {  
               data,
-              totalCount: Number(headers['x-total-count'] || 7),
+              totalCount: Number(headers['x-total-count'] || 6),
             };
           }
 

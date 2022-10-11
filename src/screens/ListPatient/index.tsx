@@ -128,12 +128,12 @@ export const ListPatient = () => {
                         <caption>Nenhum paciente encontrado.</caption>
                     )}
 
-                    {(totalPatient > 0 && totalPatient > 7) && (
+                    {(totalPatient > 0 && totalPatient > 6) && (
                         <TableRow>
                             <TableCell colSpan={11}>
                             <Pagination
                                 page={page}
-                                count={Math.ceil(totalPatient / 7)}
+                                count={Math.ceil(totalPatient / 6)}
                                 onChange={(_, newPage) => setsearchParams({ search, page: newPage.toString() }, { replace: true })}
                             />
                             </TableCell>

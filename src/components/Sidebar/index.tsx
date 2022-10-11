@@ -8,10 +8,12 @@ import {
     ListItemButton,
     ListItemIcon,
     ListItemText,
+    Icon,
 } from '@mui/material';
 import StackedBarChartTwoToneIcon from '@mui/icons-material/StackedBarChartTwoTone';
 import PersonAddAltTwoToneIcon from '@mui/icons-material/PersonAddAltTwoTone';
 import FormatListBulletedTwoToneIcon from '@mui/icons-material/FormatListBulletedTwoTone';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 import ArrowBackSharpIcon from '@mui/icons-material/ArrowBackSharp';
 import { Box }from '@mui/system';
 import { useNavigate } from 'react-router-dom';
@@ -61,6 +63,13 @@ export const Sidebar: React.FC<AppThemeProviderProps> = ( { children }) => {
                     <Typography variant="caption" gutterBottom >
                         #PacientePrimeiro
                     </Typography>
+                    <Typography variant="caption" gutterBottom >
+                        Desenvolvido com <FavoriteIcon sx={{ fontSize: 10 }}/> por
+                    </Typography>
+                    <Typography variant="caption" gutterBottom mt={-1.3}>
+                        Marden Melo
+                    </Typography>
+
                 </Box>
 
                 <Divider />
