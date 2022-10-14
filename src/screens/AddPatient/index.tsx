@@ -77,7 +77,7 @@ export const AddPatient = () => {
                             alert(data.message);
                         } else {
                             alert('Dados salvos!')
-                            navigate(`/addpatient/${data}`)
+                            navigate(`/listpatient`)
                         }
                     })
                 } else {
@@ -86,7 +86,10 @@ export const AddPatient = () => {
                     .then((data) => {
                         if(data instanceof Error) {
                             alert(data.message);
-                        } 
+                        } else {
+                            alert('Dados salvos!')
+                            navigate(`/listpatient`)
+                        }
                     })
                 }
             }))
